@@ -3,7 +3,6 @@ import 'widgets/bottom_nav_bar.dart';
 import 'screens/ObbangChu/ObbangChu_screen.dart';
 import 'screens/best/best_screen.dart';
 import 'screens/map/map_screen.dart';
-import 'screens/fav/fav_screen.dart';
 import 'screens/my/my_screen.dart';
 
 void main() => runApp(const BreadApp());
@@ -39,7 +38,6 @@ class _RootTabViewState extends State<_RootTabView> {
     ObbangChuScreen(),
     BestScreen(),
     MapScreen(),
-    FavScreen(),
     MyScreen(),
   ];
 

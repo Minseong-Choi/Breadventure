@@ -36,7 +36,7 @@ class BottomNavBar extends StatelessWidget {
             ),
           ),
           // 튀어오른 홈 버튼
-          Positioned(
+          /*Positioned(
             top: -28,
             left: MediaQuery.of(context).size.width / 2 - 28,
             child: GestureDetector(
@@ -49,7 +49,7 @@ class BottomNavBar extends StatelessWidget {
                     color: Colors.white, size: 28),
               ),
             ),
-          ),
+          ),*/
         ],
       ),
     );
@@ -93,8 +93,7 @@ const _icons = [ // _icons에서 _는 접근 제한자. 외부 파일에서 impo
   Icons.home,
   Icons.search,
   Icons.explore,
-  Icons.favorite,
   Icons.person,
 ];
 
-const _labels = ['Home', 'Search', 'Map', 'Fav', 'My'];
+const _labels = ['Home', 'Search', 'Map', 'My'];
