@@ -5,24 +5,24 @@ class BestScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bakeries = [
+    final List <Map<String, String>> bakeries = [
       {
         'name': '런던베이글',
-        'menu': '쫄파치즈베이글',
-        'rating': 4.7,
-        'image': "https://example.com/image1.jpg",
+        'menu': '쪽파크림치즈베이글',
+        'rating': '4.7',
+        'image': 'lib/assets/images/LBM.jpg',
       },
       {
         'name': '성심당',
         'menu': '명란바게트',
-        'rating': 4.9,
-        'image': 'https://example.com/image2.jpg',
+        'rating': '4.9',
+        'image': 'lib/assets/images/ML.jpg',
       },
       {
         'name': '밀도',
         'menu': '크림빵',
-        'rating': 4.8,
-        'image': 'https://example.com/image3.jpg',
+        'rating': '4.8',
+        'image': 'lib/assets/images/MDCream.jpg',
       },
     ];
 
@@ -45,8 +45,8 @@ class BestScreen extends StatelessWidget {
                     // 🥐 이미지
                     ClipRRect(
                       borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
-                      child: Image.network(
-                        bakery['image'] as String,
+                      child: Image.asset(
+                        bakery['image']!,
                         height: 180,
                         width: double.infinity,
                         fit: BoxFit.cover,
