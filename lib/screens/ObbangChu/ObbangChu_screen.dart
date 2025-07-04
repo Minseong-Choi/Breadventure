@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class MapScreen extends StatelessWidget {
-  const MapScreen({super.key});
+class ObbangChuScreen extends StatelessWidget {
+  const ObbangChuScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return const Center(
-      child: Text('지도 화면'),
+      child: Text('오빵추 화면'),
     );
   }
 }
