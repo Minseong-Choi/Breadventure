@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../Placeholder_page.dart';
+
 
 class BestScreen extends StatelessWidget {
   const BestScreen({super.key});
@@ -32,7 +34,16 @@ class BestScreen extends StatelessWidget {
         itemCount: bakeries.length,
         itemBuilder: (context, index) {
           final bakery = bakeries[index];
-          return Stack(
+          return GestureDetector(
+              onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const PlaceholderPage(),
+              ),
+            );
+          },
+          child: Stack(
             children: [
               Card(
                 margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -108,7 +119,7 @@ class BestScreen extends StatelessWidget {
                 ),
               ),
             ],
-          );
+          ));
         },
       ),
     );
