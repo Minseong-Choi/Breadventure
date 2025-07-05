@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class MyScreen extends StatelessWidget {
-  const MyScreen({super.key});
+class ObbangChuScreen extends StatelessWidget {
+  const ObbangChuScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return const Center(
-      child: Text('마이페이지 화면'),
+      child: Text('오빵추 화면'),
     );
   }
 }

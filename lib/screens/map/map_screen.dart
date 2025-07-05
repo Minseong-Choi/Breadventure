@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:breadventure/screens/map/kakao_map_widget.dart';
 
+
 class MapScreen extends StatelessWidget {
   const MapScreen({super.key});
 
@@ -17,7 +18,4 @@ class MapScreen extends StatelessWidget {
     );
   }
 }
-
-
-
 
