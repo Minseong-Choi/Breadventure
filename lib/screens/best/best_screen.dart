@@ -12,19 +12,19 @@ class BestScreen extends StatelessWidget {
         'name': '런던베이글',
         'menu': '쪽파크림치즈베이글',
         'rating': '4.7',
-        'image': 'lib/assets/images/LBM.jpg',
+        'image': 'lib/assets/images/breads/LBM.jpg',
       },
       {
         'name': '성심당',
         'menu': '명란바게트',
         'rating': '4.9',
-        'image': 'lib/assets/images/ML.jpg',
+        'image': 'lib/assets/images/breads/ML.jpg',
       },
       {
         'name': '밀도',
         'menu': '크림빵',
         'rating': '4.8',
-        'image': 'lib/assets/images/MDCream.jpg',
+        'image': 'lib/assets/images/breads/MDCream.jpg',
       },
     ];
 
