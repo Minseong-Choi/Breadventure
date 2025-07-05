@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../bottomSheet/bottomSheet.dart';
+import 'package:breadventure/screens/map/kakao_map_widget.dart';
 
 class MapScreen extends StatelessWidget {
   const MapScreen({super.key});
@@ -13,18 +14,27 @@ class MapScreen extends StatelessWidget {
     );
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('지도 화면')),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () => _showRestaurantSheet(context),
-          child: const Text('🍞 빵집 리스트 보기'),
-        ),
+      body: Column(
+        children: [
+          // Map 위젯
+          Expanded(
+            child: KakaoMapWidget(),
+          ),
+          // 버튼
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: ElevatedButton(
+              onPressed: () => _showRestaurantSheet(context),
+              child: const Text('🍞 빵집 리스트 보기'),
+            ),
+          ),
+        ],
       ),
     );
   }
 }
+
