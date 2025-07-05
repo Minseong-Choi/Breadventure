@@ -22,20 +22,20 @@ class RestaurantBottomSheet extends StatefulWidget {
 
 class _RestaurantBottomSheetState extends State<RestaurantBottomSheet> {
   final List<String> imagePaths = [
-    'lib/assets/images/LBM.jpg',
-    'lib/assets/images/MDCream.jpg',
-    'lib/assets/images/ML.jpg',
+    'lib/assets/images/breads/LBM.jpg',
+    'lib/assets/images/breads/MDCream.jpg',
+    'lib/assets/images/breads/ML.jpg',
   ];
 
   final List<Map<String, dynamic>> reviews = [
     {
-      'profileImage': 'lib/assets/images/grayCat.png',
+      'profileImage': 'lib/assets/images/cats/cat_gray.png',
       'username': '빵덕후',
       'rating': 5,
       'comment': '여기 빵 정말 맛있어요!',
     },
     {
-      'profileImage': 'lib/assets/images/orangeCat.png',
+      'profileImage': 'lib/assets/images/cats/cat_brown.png',
       'username': '빵순이',
       'rating': 4,
       'comment': '분위기도 좋고 재방문 의사 있음',
