@@ -1,21 +1,7 @@
 import 'package:flutter/material.dart';
-
-// PlaceholderPage는 임시 상세페이지
-class PlaceholderPage extends StatelessWidget {
-  const PlaceholderPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Placeholder Page"),
-      ),
-      body: const Center(
-        child: Text("여기는 Placeholder Page입니다."),
-      ),
-    );
-  }
-}
+import '../bakery_detail_page.dart';
+// BakeryDetailPage는 상세페이지
+// 기존 PlaceholderPage는 삭제 혹은 주석처리 가능
 
 class ObbangChuScreen extends StatelessWidget {
   const ObbangChuScreen({super.key});
@@ -82,11 +68,11 @@ class ObbangChuScreen extends StatelessWidget {
             // 추천 빵 카드
             GestureDetector(
               onTap: () {
-                // PlaceholderPage로 이동
+                // ✅ BakeryDetailPage로 이동
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const PlaceholderPage(),
+                    builder: (context) => const BakeryDetailPage(),
                   ),
                 );
               },
@@ -153,5 +139,4 @@ class SpeechBubbleTailPainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
-
 
