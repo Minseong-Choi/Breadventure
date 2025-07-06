@@ -1,99 +1,265 @@
-import 'package:flutter/material.dart'; //기본 내장 icons exist.
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
+const Color white = Colors.white;
+final Color ivory = Color(0xFFECE6CC);
+const Color darkGrey = Color(0xFF555555);
+
+class PhotoAlbumPage extends StatefulWidget {
+  @override
+  State<PhotoAlbumPage> createState() => _PhotoAlbumPageState();
+}
+
+class _PhotoAlbumPageState extends State<PhotoAlbumPage> {
+  int current = 0;
+
+  final List<Map<String, dynamic>> reviews = [
+    {
+      'profileImage': 'lib/assets/images/cats/cat_gray.png',
+      'username': '빵덕후',
+      'rating': 5,
+      'comment': '여기 빵 정말 맛있어요!',
+    },
+    {
+      'profileImage': 'lib/assets/images/cats/cat_brown.png',
+      'username': '빵순이',
+      'rating': 4,
+      'comment': '분위기도 좋고 재방문 의사 있음',
+    },
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('빵냥이의 빵로그'),
+        centerTitle: true,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              '빵냥이의 빵로그',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 12),
+            SizedBox(
+              height: 200,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: 20,
+                itemBuilder: (context, index) {
+                  final imagePath = 'lib/assets/album/$index.png';
+                  final review = index < reviews.length ? reviews[index] : null;
+
+                  return Padding(
+                    padding: const EdgeInsets.only(right: 8),
+                    child: GestureDetector(
+                      onTap: () {
+                        if (review != null) {
+                          showDialog(
+                            context: context,
+                            builder: (_) => Dialog(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(16),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(8),
+                                      child: Image.asset(imagePath, fit: BoxFit.cover),
+                                    ),
+                                    const SizedBox(height: 12),
+                                    Row(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        ClipRRect(
+                                          borderRadius: BorderRadius.circular(20),
+                                          child: Image.asset(
+                                            review['profileImage'],
+                                            width: 40,
+                                            height: 40,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                        const SizedBox(width: 12),
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  Text(
+                                                    review['username'],
+                                                    style: const TextStyle(fontWeight: FontWeight.bold),
+                                                  ),
+                                                  const SizedBox(width: 8),
+                                                  Row(
+                                                    children: List.generate(
+                                                      5,
+                                                          (starIndex) => Icon(
+                                                        starIndex < review['rating']
+                                                            ? Icons.star
+                                                            : Icons.star_border,
+                                                        color: Colors.amber,
+                                                        size: 16,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              const SizedBox(height: 6),
+                                              Text(
+                                                review['comment'],
+                                                maxLines: 3,
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 12),
+                                    TextButton(
+                                      onPressed: () => Navigator.of(context).pop(),
+                                      child: const Text('닫기'),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          );
+                        }
+                      },
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: Image.asset(
+                          imagePath,
+                          fit: BoxFit.cover,
+                          width: 120,
+                          height: 120,
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+      bottomNavigationBar: BottomNavBar(
+        current: current,
+        onTap: (index) => setState(() => current = index),
+      ),
+    );
+  }
+}
 
 class BottomNavBar extends StatelessWidget {
-  const BottomNavBar({
-    super.key, //statelessWidget에서의 식별자
-    required this.current, // 현재 위치해 있는 탭
-    required this.onTap, // 탭 클릭시 callback
-  });
-
-  final int current; // final : 불변값 할당. tap을 누를 때마다 새로운 nav_bar 위젯이 생성됨.
+  final int current;
   final ValueChanged<int> onTap;
 
-  @override // StatelessWidget 안에 widget build 메소드가 정의되어 있음. 이 부모의 메소드를 내 방식으로 재정의 해서 가져다 쓰는 것
-  Widget build(BuildContext context) { // buile 함수 : 외부에서 위젯의 위치 정보를 넘겨주면 그 위치에 return 안의 위젯 정보를 반환함.
-    return SizedBox(
-      height: 84,
-      child: Stack( // stack : 여러 위젯을 겹쳐서 배치할 때 사용하는 위젯(bar와 지도 동그라미)
-        clipBehavior: Clip.none, //  stack 영역 넘어가도 안잘리게 함
+  const BottomNavBar({super.key, required this.current, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedContainer(
+      height: 70.0,
+      duration: const Duration(milliseconds: 400),
+      decoration: const BoxDecoration(
+        color: white,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
+        ),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          // 하단 바 배경
-          Positioned.fill(
-            child: Material(
-              color: Colors.black87,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: List.generate(_icons.length, (i) {
-                  final selected = i == current;
-                  return _NavItem(
-                    icon: _icons[i],
-                    label: _labels[i],
-                    selected: selected,
-                    onTap: () => onTap(i),
-                  );
-                }),
+          for (int i = 0; i < navBtn.length; i++)
+            GestureDetector(
+              onTap: () => onTap(i),
+              child: SizedBox(
+                width: 75.0,
+                child: Stack(
+                  children: [
+                    Align(
+                      alignment: Alignment.topCenter,
+                      child: AnimatedContainer(
+                        height: current == i ? 60.0 : 0.0,
+                        width: current == i ? 50.0 : 0.0,
+                        duration: const Duration(milliseconds: 200),
+                        child: current == i
+                            ? CustomPaint(painter: ButtonNotch())
+                            : const SizedBox(),
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.center,
+                      child: SvgPicture.asset(
+                        navBtn[i].imagePath,
+                        color: current == i ? ivory : darkGrey,
+                        width:24,
+                        height:24,
+                        fit:BoxFit.contain,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-          // 튀어오른 홈 버튼
-          /*Positioned(
-            top: -28,
-            left: MediaQuery.of(context).size.width / 2 - 28,
-            child: GestureDetector(
-              onTap: () => onTap(0),
-              child: CircleAvatar(
-                radius: 28,
-                backgroundColor:
-                current == 0 ? Colors.black87 : Colors.grey.shade800,
-                child: Icon(Icons.home,
-                    color: Colors.white, size: 28),
-              ),
-            ),
-          ),*/
         ],
       ),
     );
   }
 }
 
-class _NavItem extends StatelessWidget {
-  const _NavItem({
-    required this.icon,
-    required this.label,
-    required this.selected,
-    required this.onTap,
-  });
+class ButtonNotch extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    var dotPoint = Offset(size.width / 2, 2);
 
-  final IconData icon;
-  final String label;
-  final bool selected;
-  final VoidCallback onTap;
+    var paint_1 = Paint()
+      ..color = ivory
+      ..style = PaintingStyle.fill;
+    var paint_2 = Paint()
+      ..color = white
+      ..style = PaintingStyle.fill;
+
+    var path = Path();
+
+    path.moveTo(0, 0);
+    path.quadraticBezierTo(7.5, 0, 12, 5);
+    path.quadraticBezierTo(size.width / 2, size.height / 3, size.width - 12, 5);
+    path.quadraticBezierTo(size.width - 7.5, 0, size.width, 0);
+    path.close();
+    canvas.drawPath(path, paint_1);
+    canvas.drawCircle(dotPoint, 5, paint_2);
+  }
 
   @override
-  Widget build(BuildContext context) {
-    final color = selected ? Colors.white : Colors.white60; // selected 되었으면 흰색, 아니면 반투명 흰색
-    return InkWell(
-      onTap: onTap,
-      child: SizedBox(
-        width: 64,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(icon, color: color, size: 22),
-            const SizedBox(height: 2),
-            Text(label, style: TextStyle(color: color, fontSize: 11)),
-          ],
-        ),
-      ),
-    );
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return false;
   }
 }
 
-const _icons = [ // _icons에서 _는 접근 제한자. 외부 파일에서 import해도 접근할 수 없음.
-  Icons.home,
-  Icons.search,
-  Icons.explore,
-  Icons.person,
-];
+class Model {
+  final int id;
+  final String imagePath;
+  final String name;
 
-const _labels = ['Home', 'Search', 'Map', 'My'];
+  Model({required this.id, required this.imagePath, required this.name});
+}
+
+List<Model> navBtn = [
+  Model(id: 0, imagePath: 'lib/assets/images/icon/homeIcon.svg', name: 'Home'),
+  Model(id: 1, imagePath: 'lib/assets/images/icon/rankingIcon.svg', name: 'Ranking'),
+  Model(id: 2, imagePath: 'lib/assets/images/icon/mapIcon.svg', name: 'Map'),
+  Model(id: 3, imagePath: 'lib/assets/images/icon/myIcon.svg', name: 'My'),
+];
