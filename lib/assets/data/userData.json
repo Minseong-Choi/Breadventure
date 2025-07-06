@@ -110,7 +110,7 @@
     {
       "id": 3,
       "username": "빵냥이대왕",
-      "profileImage": "lib/assets/images/cats/cat_big.png",
+      "profileImage": "lib/assets/images/cats/cat_black.png",
       "reviews": [
         { "image": "lib/assets/images/album/0.png", "rating": 5, "comment": "크림 가득!" },
         { "image": "lib/assets/images/album/1.png", "rating": 4, "comment": "담백해서 좋아요" },

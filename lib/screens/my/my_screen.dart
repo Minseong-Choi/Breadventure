@@ -204,21 +204,29 @@ class _MyScreenState extends State<MyScreen> {
                                           children: [
                                             ClipRRect(
                                               borderRadius: BorderRadius.circular(8),
-                                              child: Image.asset(imagePath, fit: BoxFit.cover),
+                                              child:AspectRatio(
+                                                aspectRatio:1,
+                                                child: Image.asset(
+                                                    imagePath, fit: BoxFit.cover
+                                                ),
+                                              ),
                                             ),
                                             const SizedBox(height: 12),
                                             Row(
                                               crossAxisAlignment: CrossAxisAlignment.center,
                                               children: [
-                                                ClipRRect(
-                                                  borderRadius: BorderRadius.circular(20),
-                                                  child: Image.asset(
-                                                    profileImage,
-                                                    width: 40,
-                                                    height: 40,
-                                                    fit: BoxFit.cover,
+                                                SizedBox(
+                                                  width: 40,
+                                                  height: 40,
+                                                  child: ClipRRect(
+                                                    borderRadius: BorderRadius.circular(20),
+                                                    child: Image.asset(
+                                                      profileImage,
+                                                      fit: BoxFit.cover,
+                                                    ),
                                                   ),
                                                 ),
+
                                                 const SizedBox(width: 12),
                                                 Expanded(
                                                   child: Column(
