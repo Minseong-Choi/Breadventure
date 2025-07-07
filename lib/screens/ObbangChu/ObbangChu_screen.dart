@@ -37,84 +37,85 @@ class ObbangChuScreen extends StatelessWidget {
                         style: const TextStyle(fontSize: 16),
                         textAlign: TextAlign.center,
                       ),
-                    ),
-                    Positioned(
-                      bottom: -10,
-                      left: 20,
-                      child: CustomPaint(
-                        painter: SpeechBubbleTailPainter(),
-                        child: const SizedBox(
-                          width: 20,
-                          height: 10,
+                      Positioned(
+                        bottom: -10,
+                        left: 20,
+                        child: CustomPaint(
+                          painter: SpeechBubbleTailPainter(),
+                          child: const SizedBox(
+                            width: 20,
+                            height: 10,
+                          ),
                         ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 10),
-                // 고양이 이미지
-                Image.asset(
-                  'lib/assets/images/cats/cat_brown.png',
-                  width: 140,
-                  height: 140,
-                ),
-              ],
-            ),
-            const SizedBox(height: 24),
-            // 추천 빵 카드
-            GestureDetector(
-              onTap: () {
-                // ✅ BakeryDetailPage로 이동
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const BakeryDetailPage(),
-                  ),
-                );
-              },
-              child: Card(
-                elevation: 3,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Column(
-                    children: [
-                      // 빵 이미지 (크기 많이 확대)
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(12),
-                        child: Image.asset(
-                          breadImageUrl,
-                          width: 240,
-                          height: 240,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      const SizedBox(height: 12),
-                      // 빵 정보 (아래에 위치)
-                      Text(
-                        breadName,
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                      const SizedBox(height: 6),
-                      Text(
-                        bakeryName,
-                        style: const TextStyle(fontSize: 16, color: Colors.grey),
-                        textAlign: TextAlign.center,
                       ),
                     ],
                   ),
+                  const SizedBox(height: 10),
+                  // 고양이 이미지
+                  Image.asset(
+                    'lib/assets/images/cats/cat_brown.png',
+                    width: 140,
+                    height: 140,
+                  ),
+                ],
+              ),
+              const SizedBox(height: 24),
+              // 추천 빵 카드
+              GestureDetector(
+                onTap: () {
+                  // ✅ BakeryDetailPage로 이동
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const BakeryDetailPage(),
+                    ),
+                  );
+                },
+                child: Card(
+                  elevation: 3,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Column(
+                      children: [
+                        // 빵 이미지 (크기 많이 확대)
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(12),
+                          child: Image.asset(
+                            breadImageUrl,
+                            width: 240,
+                            height: 240,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        const SizedBox(height: 12),
+                        // 빵 정보 (아래에 위치)
+                        Text(
+                          breadName,
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(height: 6),
+                        Text(
+                          bakeryName,
+                          style: const TextStyle(fontSize: 16, color: Colors.grey),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
+      )
+
     );
   }
 }
