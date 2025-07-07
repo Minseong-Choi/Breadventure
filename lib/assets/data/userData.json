@@ -1,0 +1,152 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "username": "아기빵냥이",
+      "profileImage": "lib/assets/images/cats/cat_gray.png",
+      "reviews": [
+        {
+          "image": "lib/assets/images/album/0.png",
+          "rating": 4,
+          "comment": "빵 부드러워요!"
+        },
+        {
+          "image": "lib/assets/images/album/1.png",
+          "rating": 5,
+          "comment": "사장님 친절!"
+        },
+        {
+          "image": "lib/assets/images/album/2.png",
+          "rating": 3,
+          "comment": "맛있긴 한데 조금 짜요"
+        }
+      ],
+      "favorites": [
+        {
+          "name": "도쿄팡야",
+          "menu": "앙버터",
+          "rating": "4.7",
+          "image": "lib/assets/images/breads/CreamBread.jpg"
+        },
+        {
+          "name": "김영모과자점",
+          "menu": "소금빵",
+          "rating": "4.9",
+          "image": "lib/assets/images/breads/LBM.jpg"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "username": "길빵고수",
+      "profileImage": "lib/assets/images/cats/cat_brown.png",
+      "reviews": [
+        {
+          "image": "lib/assets/images/album/0.png",
+          "rating": 5,
+          "comment": "역시 소문대로 맛있다!"
+        },
+        {
+          "image": "lib/assets/images/album/1.png",
+          "rating": 4,
+          "comment": "적당히 달고 좋아요"
+        },
+        {
+          "image": "lib/assets/images/album/2.png",
+          "rating": 4,
+          "comment": "커피랑 찰떡"
+        },
+        {
+          "image": "lib/assets/images/album/3.png",
+          "rating": 5,
+          "comment": "재방문 의사 200%"
+        },
+        {
+          "image": "lib/assets/images/album/4.png",
+          "rating": 3,
+          "comment": "줄이 너무 길어요..."
+        },
+        {
+          "image": "lib/assets/images/album/5.png",
+          "rating": 5,
+          "comment": "크림이 정말 신선함"
+        },
+        {
+          "image": "lib/assets/images/album/6.png",
+          "rating": 4,
+          "comment": "겉바속촉 최고"
+        },
+        {
+          "image": "lib/assets/images/album/7.png",
+          "rating": 5,
+          "comment": "엄마도 좋아하셨어요"
+        },
+        {
+          "image": "lib/assets/images/album/8.png",
+          "rating": 4,
+          "comment": "고소해서 계속 손감"
+        },
+        {
+          "image": "lib/assets/images/album/9.png",
+          "rating": 5,
+          "comment": "매장 분위기 최고"
+        }
+      ],
+      "favorites": [
+        {
+          "name": "르뱅쿠키",
+          "menu": "초코쿠키",
+          "rating": "4.8",
+          "image": "lib/assets/images/breads/MDCream.jpg"
+        },
+        {
+          "name": "바켄",
+          "menu": "소세지빵",
+          "rating": "4.5",
+          "image": "lib/assets/images/breads/ML.jpg"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "username": "빵냥이대왕",
+      "profileImage": "lib/assets/images/cats/cat_black.png",
+      "reviews": [
+        { "image": "lib/assets/images/album/0.png", "rating": 5, "comment": "크림 가득!" },
+        { "image": "lib/assets/images/album/1.png", "rating": 4, "comment": "담백해서 좋아요" },
+        { "image": "lib/assets/images/album/2.png", "rating": 5, "comment": "겉은 바삭 속은 촉촉" },
+        { "image": "lib/assets/images/album/3.png", "rating": 4, "comment": "감칠맛이 예술" },
+        { "image": "lib/assets/images/album/4.png", "rating": 3, "comment": "약간 짰어요" },
+        { "image": "lib/assets/images/album/5.png", "rating": 5, "comment": "우유랑 완전 찰떡" },
+        { "image": "lib/assets/images/album/6.png", "rating": 4, "comment": "양도 많고 만족" },
+        { "image": "lib/assets/images/album/7.png", "rating": 5, "comment": "디저트로 딱" },
+        { "image": "lib/assets/images/album/8.png", "rating": 5, "comment": "아침식사로 최고" },
+        { "image": "lib/assets/images/album/9.png", "rating": 4, "comment": "카페인과 궁합 좋아요" },
+        { "image": "lib/assets/images/album/10.png", "rating": 5, "comment": "친구랑 또 오고 싶어요" },
+        { "image": "lib/assets/images/album/11.png", "rating": 5, "comment": "사장님이 친절함" },
+        { "image": "lib/assets/images/album/12.png", "rating": 3, "comment": "조금 딱딱함" },
+        { "image": "lib/assets/images/album/13.png", "rating": 4, "comment": "스콘 대박" },
+        { "image": "lib/assets/images/album/14.png", "rating": 4, "comment": "밤식빵 맛남" },
+        { "image": "lib/assets/images/album/15.png", "rating": 5, "comment": "다이어트 포기각" },
+        { "image": "lib/assets/images/album/16.png", "rating": 4, "comment": "너무 유명해서 사람 많음" },
+        { "image": "lib/assets/images/album/17.png", "rating": 5, "comment": "크로와상 맛집" },
+        { "image": "lib/assets/images/album/18.png", "rating": 5, "comment": "달지 않아 좋아요" },
+        { "image": "lib/assets/images/album/19.png", "rating": 4, "comment": "포장도 예쁨" }
+      ],
+      "favorites": [
+        {
+          "name": "폴앤폴리나",
+          "menu": "무화과빵",
+          "rating": "4.9",
+          "image": "lib/assets/images/breads/CreamBread.jpg"
+        },
+        {
+          "name": "오월의종",
+          "menu": "바게트",
+          "rating": "4.8",
+          "image": "lib/assets/images/breads/LBM.jpg"
+        }
+      ]
+    }
+  ]
+}

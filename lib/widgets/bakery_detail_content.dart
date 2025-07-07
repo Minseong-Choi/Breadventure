@@ -14,6 +14,7 @@ class BakeryDetailContent extends StatelessWidget {
   Widget build(BuildContext context) {
     // ⭐️ 빵집 이름도 하드코딩
     const String bakeryName = '밀도 서울숲점';
+    const double averageRating = 4.1;
 
     final List<String> imagePaths = [
       'lib/assets/images/breads/LBM.jpg',
@@ -53,6 +54,25 @@ class BakeryDetailContent extends StatelessWidget {
                 color: isLiked ? Colors.red : Colors.grey,
               ),
               onPressed: onLikeToggle,
+            ),
+          ],
+        ),
+        const SizedBox(height: 4),
+        Row(
+          children: [
+            Text(
+              averageRating.toStringAsFixed(1),
+              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+            ),
+            const SizedBox(width: 6),
+            Row(
+              children: List.generate(5, (index) {
+                if (index < averageRating.floor()) {
+                  return const Icon(Icons.star, color: Colors.amber, size: 16);
+                } else {
+                  return const Icon(Icons.star_border, color: Colors.amber, size: 16);
+                }
+              }),
             ),
           ],
         ),
@@ -121,6 +141,7 @@ class BakeryDetailContent extends StatelessWidget {
           '메뉴',
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         ),
+        const SizedBox(height: 8),
         const Text('• 쪽파크림치즈베이글'),
         const Text('• 명란바게트'),
         const Text('• 크림빵'),
