@@ -46,10 +46,6 @@ class _MyScreenState extends State<MyScreen> {
     final username = userData!['username'];
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('마이페이지'),
-        centerTitle: true,
-      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(24),
