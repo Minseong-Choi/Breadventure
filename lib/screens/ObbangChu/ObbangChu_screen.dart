@@ -15,10 +15,6 @@ class ObbangChuScreen extends StatelessWidget {
     final String breadImageUrl = "lib/assets/images/breads/CreamBread.jpg";
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("오빵추"),
-        centerTitle: true,
-      ),
       body: Center( // 화면 중앙에 전체 배치
         child: Column(
           mainAxisSize: MainAxisSize.min,
