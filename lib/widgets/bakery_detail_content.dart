@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../screens/bakery_review_page.dart';
 
 class BakeryDetailContent extends StatelessWidget {
   final bool isLiked;
@@ -149,10 +150,25 @@ class BakeryDetailContent extends StatelessWidget {
         const SizedBox(height: 20),
 
         // 리뷰 제목
-        const Text(
-          '리뷰',
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        Row(
+            children: [
+              const Text(
+                '리뷰',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(width: 8),
+              IconButton(onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const BakeryReviewPage()
+                  )
+                );
+              }, icon: const Icon(Icons.add))
+            ]
         ),
+
+
         const SizedBox(height: 12),
 
         // 리뷰 리스트
