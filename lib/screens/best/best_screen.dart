@@ -29,7 +29,6 @@ class BestScreen extends StatelessWidget {
     ];
 
     return Scaffold(
-      appBar: AppBar(title: const Text('BEST 빵집')),
       body: ListView.builder(
         itemCount: bakeries.length,
         itemBuilder: (context, index) {

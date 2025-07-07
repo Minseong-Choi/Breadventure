@@ -17,7 +17,6 @@ class MapScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('지도 화면')),
       body: Column(
         children: [
           // Map 위젯

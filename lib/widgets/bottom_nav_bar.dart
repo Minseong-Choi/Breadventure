@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 const Color white = Colors.white;
-final Color ivory = Color(0xFFECE6CC);
+final Color ivory = Color(0xFFFCEAD9);
 const Color darkGrey = Color(0xFF555555);
 
 class PhotoAlbumPage extends StatefulWidget {

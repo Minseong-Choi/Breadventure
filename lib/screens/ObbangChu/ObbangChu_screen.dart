@@ -15,33 +15,27 @@ class ObbangChuScreen extends StatelessWidget {
     final String breadImageUrl = "lib/assets/images/breads/CreamBread.jpg";
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("오빵추"),
-        centerTitle: true,
-      ),
-      body: SingleChildScrollView(
-        child: Center( // 화면 중앙에 전체 배치
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              // 말풍선 + 꼬리
-              Column(
-                children: [
-                  // 말풍선 (Stack + CustomPaint 꼬리)
-                  Stack(
-                    clipBehavior: Clip.none,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          color: Colors.orange[100],
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Text(
-                          "오늘은 $weather 날씨야!\n이런 날엔 $breadName 어때?",
-                          style: const TextStyle(fontSize: 16),
-                          textAlign: TextAlign.center,
-                        ),
+      body: Center( // 화면 중앙에 전체 배치
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // 말풍선 + 꼬리
+            Column(
+              children: [
+                // 말풍선 (Stack + CustomPaint 꼬리)
+                Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: Colors.orange[100],
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Text(
+                        "오늘은 $weather 날씨야!\n이런 날엔 $breadName 어때?",
+                        style: const TextStyle(fontSize: 16),
+                        textAlign: TextAlign.center,
                       ),
                       Positioned(
                         bottom: -10,

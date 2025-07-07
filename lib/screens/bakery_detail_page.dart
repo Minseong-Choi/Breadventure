@@ -14,6 +14,7 @@ class _BakeryDetailPageState extends State<BakeryDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text('🥐 빵집 상세페이지'),
         leading: IconButton(
