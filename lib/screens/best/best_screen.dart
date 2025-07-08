@@ -37,11 +37,14 @@ class BestScreen extends StatelessWidget {
           }
 
           final topBakeries = snapshot.data!;
-          final String photoUrl= bakery.photos.isNotEmpty ? bakery.photos.first.trim() : '';
+
           return ListView.builder(
             itemCount: topBakeries.length,
             itemBuilder: (context, index) {
               final bakery = topBakeries[index];
+              final String rawUrl = bakery.photos.isNotEmpty ? bakery.photos.first.trim() : '';
+              final String photoUrl = rawUrl.isNotEmpty ? Uri.parse(rawUrl).toString() : '';
+
               return GestureDetector(
                 onTap: () {
                   Navigator.push(
@@ -64,7 +67,7 @@ class BestScreen extends StatelessWidget {
                           ClipRRect(
                             borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
                             child: Image.network(
-                              bakery.photos.isNotEmpty ? bakery.photos.first : '',
+                              photoUrl,
                               height: 180,
                               width: double.infinity,
                               fit: BoxFit.cover,
