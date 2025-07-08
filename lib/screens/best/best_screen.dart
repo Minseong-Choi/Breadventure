@@ -3,6 +3,7 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'dart:convert';
 import '../../models/bakery.dart';
 import '../bakery_detail_page.dart';
+import 'dart:io';
 
 class BestScreen extends StatelessWidget {
   const BestScreen({super.key});
@@ -38,12 +39,15 @@ class BestScreen extends StatelessWidget {
 
           final topBakeries = snapshot.data!;
 
+
           return ListView.builder(
             itemCount: topBakeries.length,
             itemBuilder: (context, index) {
               final bakery = topBakeries[index];
               final String rawUrl = bakery.photos.isNotEmpty ? bakery.photos.first.trim() : '';
               final String photoUrl = rawUrl.isNotEmpty ? Uri.parse(rawUrl).toString() : '';
+
+
 
               return GestureDetector(
                 onTap: () {
@@ -66,7 +70,8 @@ class BestScreen extends StatelessWidget {
                         children: [
                           ClipRRect(
                             borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
-                            child: Image.network(
+                            child: photoUrl.isNotEmpty
+                                ? Image.network(
                               photoUrl,
                               height: 180,
                               width: double.infinity,
@@ -76,8 +81,16 @@ class BestScreen extends StatelessWidget {
                                 height: 180,
                                 child: const Center(child: Icon(Icons.broken_image)),
                               ),
+                            )
+                                : Image.asset(
+                              'lib/assets/images/cats/defaultCat.png', // 로컬 디폴트 이미지 경로
+                              height: 180,
+                              width: double.infinity,
+                              fit: BoxFit.cover,
                             ),
                           ),
+
+
                           Padding(
                             padding: const EdgeInsets.all(12),
                             child: Column(
