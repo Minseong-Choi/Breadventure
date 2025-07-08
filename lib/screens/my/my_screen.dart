@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
-import '../Placeholder_page.dart';
+import '../bakery_detail_page.dart';
 //userData = jsonMap['users'][2]; 안의 숫자 0-2까지 바꾸면서 유저 바꿔볼 수 있음
 
 class MyScreen extends StatefulWidget {
@@ -127,7 +127,7 @@ class _MyScreenState extends State<MyScreen> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const PlaceholderPage(),
+                              builder: (context) => const BakeryDetailPage(),
                             ),
                           );
                         },

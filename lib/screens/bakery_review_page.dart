@@ -27,7 +27,7 @@ class _BakeryReviewPageState extends State<BakeryReviewPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('🥐 빵집 리뷰')),
+        backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),

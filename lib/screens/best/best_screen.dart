@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../Placeholder_page.dart';
+import '../bakery_detail_page.dart';
 
 
 class BestScreen extends StatelessWidget {
@@ -38,7 +38,7 @@ class BestScreen extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const PlaceholderPage(),
+                builder: (context) => const BakeryDetailPage(),
               ),
             );
           },
