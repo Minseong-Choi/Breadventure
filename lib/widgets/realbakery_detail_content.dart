@@ -12,6 +12,7 @@ Future<List<Bakery>> loadBakeryData() async {
   final List<dynamic> jsonList = decoded['documents'];
   return jsonList.map((json) => Bakery.fromJson(json)).toList();
 }
+
 // 상세 페이지
 class BakeryDetailPage extends StatelessWidget {
   const BakeryDetailPage({super.key});
@@ -52,6 +53,7 @@ class BakeryDetailContent extends StatelessWidget {
     required this.isLiked,
     required this.onLikeToggle,
   });
+
 
   @override
   Widget build(BuildContext context) {
@@ -168,7 +170,14 @@ class BakeryDetailContent extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const BakeryReviewPage(),
+                      builder: (context) => BakeryReviewPage(
+                        onSubmit: (rating, reviewText) {
+                          // 리뷰 작성 후, 여기에서 부모 위젯에 전달하는 작업 수행
+                          // 예를 들어, 리뷰 리스트에 추가하는 동작
+                          print('별점: $rating, 리뷰: $reviewText');
+                          // 실제로는 이 정보를 부모 위젯에 전달하여 리스트에 추가하거나 상태를 갱신합니다.
+                        },
+                      ),
                     ),
                   );
                 },
