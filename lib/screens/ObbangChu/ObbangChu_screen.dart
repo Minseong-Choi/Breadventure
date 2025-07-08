@@ -37,19 +37,20 @@ class ObbangChuScreen extends StatelessWidget {
                         style: const TextStyle(fontSize: 16),
                         textAlign: TextAlign.center,
                       ),
-                      Positioned(
-                        bottom: -10,
-                        left: 20,
-                        child: CustomPaint(
-                          painter: SpeechBubbleTailPainter(),
-                          child: const SizedBox(
-                            width: 20,
-                            height: 10,
-                          ),
+                    ),
+                    Positioned(
+                      bottom: -10,
+                      left: 20,
+                      child: CustomPaint(
+                        painter: SpeechBubbleTailPainter(),
+                        child: const SizedBox(
+                          width: 20,
+                          height: 10,
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
+                ),
                   const SizedBox(height: 10),
                   // 고양이 이미지
                   Image.asset(
@@ -58,7 +59,7 @@ class ObbangChuScreen extends StatelessWidget {
                     height: 140,
                   ),
                 ],
-              ),
+            ),
               const SizedBox(height: 24),
               // 추천 빵 카드
               GestureDetector(
@@ -114,9 +115,7 @@ class ObbangChuScreen extends StatelessWidget {
             ],
           ),
         ),
-      )
-
-    );
+      );
   }
 }
 
