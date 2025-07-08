@@ -205,6 +205,7 @@ class BakeryDetailContent extends StatelessWidget {
                         width: 40,
                         height: 40,
                         fit: BoxFit.cover,
+                        errorBuilder: (_, __, ___) => const SizedBox.shrink(),
                       ),
                     ),
                     const SizedBox(width: 12),
@@ -214,9 +215,12 @@ class BakeryDetailContent extends StatelessWidget {
                         children: [
                           Row(
                             children: [
-                              Text(
+                              Expanded(
+                                child:Text(
                                 review.reviewerName,
                                 style: const TextStyle(fontWeight: FontWeight.bold),
+                                  overflow:TextOverflow.ellipsis,
+                                ),
                               ),
                               const SizedBox(width: 8),
                               Row(
