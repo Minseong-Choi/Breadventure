@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
-import '../widgets/bakery_detail_content.dart';
-import 'bakery_review_page.dart';
+import '../models/bakery.dart';
+import '../widgets/realbakery_detail_content.dart';
+import 'dart:convert';
+import 'package:flutter/services.dart' show rootBundle;
 
 class BakeryDetailPage extends StatefulWidget {
-  const BakeryDetailPage({super.key});
+  final String bakeryId;
+
+  const BakeryDetailPage({super.key, required this.bakeryId});
 
   @override
   State<BakeryDetailPage> createState() => _BakeryDetailPageState();
@@ -12,55 +16,43 @@ class BakeryDetailPage extends StatefulWidget {
 class _BakeryDetailPageState extends State<BakeryDetailPage> {
   bool isLiked = false;
 
-  // 초기(샘플) 리뷰 목록
-  List<Map<String, dynamic>> reviews = [
-    {
-      'profileImage': 'lib/assets/images/cats/cat_gray.png',
-      'username': '빵덕후',
-      'rating': 4,
-      'comment': '여기 빵 정말 맛있어요!',
-    },
-    {
-      'profileImage': 'lib/assets/images/cats/cat_brown.png',
-      'username': '빵순이',
-      'rating': 4,
-      'comment': '분위기도 좋고 재방문 의사 있음',
-    },
-  ];
+  Future<Bakery?> loadBakeryById(String id) async {
+    final String jsonString =
+    await rootBundle.loadString('lib/assets/data/bakery_data_enriched.json');
+    final Map<String, dynamic> decoded = json.decode(jsonString);
+    final List<dynamic> jsonList = decoded['documents'];
+    final List<Bakery> bakeries =
+    jsonList.map((json) => Bakery.fromJson(json)).toList();
 
-  void _onAddReviewPressed() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => BakeryReviewPage(
-          onSubmit: (rating, comment) {
-            setState(() {
-              reviews.add({
-                'profileImage': 'lib/assets/images/cats/cat_black.png',
-                'username': '빵냥이대왕',
-                'rating': rating,
-                'comment': comment,
-              });
-            });
-          },
-        ),
-      ),
-    );
+    return bakeries.firstWhere((b) => b.id == widget.bakeryId);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('빵집 상세')),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: BakeryDetailContent(
-          isLiked: isLiked,
-          onLikeToggle: () => setState(() => isLiked = !isLiked),
-          reviews: reviews,
-          onAddReviewPressed: _onAddReviewPressed,
-        ),
-      ),
+    return FutureBuilder<Bakery?>(
+      future: loadBakeryById(widget.bakeryId),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Scaffold(body: Center(child: CircularProgressIndicator()));
+        } else if (snapshot.hasError) {
+          return Scaffold(body: Center(child: Text('에러: ${snapshot.error}')));
+        } else if (!snapshot.hasData || snapshot.data == null) {
+          return const Scaffold(body: Center(child: Text('빵집을 찾을 수 없음')));
+        }
+
+        final bakery = snapshot.data!;
+        return Scaffold(
+          body: BakeryDetailContent(
+            bakery: bakery,
+            isLiked: isLiked,
+            onLikeToggle: () {
+              setState(() {
+                isLiked = !isLiked;
+              });
+            },
+          ),
+        );
+      },
     );
   }
 }
