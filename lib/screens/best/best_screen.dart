@@ -25,7 +25,6 @@ class BestScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('🔥 베스트 빵집 Top 10')),
       body: FutureBuilder<List<Bakery>>(
         future: loadTopBakeries(),
         builder: (context, snapshot) {
@@ -38,6 +37,7 @@ class BestScreen extends StatelessWidget {
           }
 
           final topBakeries = snapshot.data!;
+          final String photoUrl= bakery.photos.isNotEmpty ? bakery.photos.first.trim() : '';
           return ListView.builder(
             itemCount: topBakeries.length,
             itemBuilder: (context, index) {
