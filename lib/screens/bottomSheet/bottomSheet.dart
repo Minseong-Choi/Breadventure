@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../widgets/bakery_detail_content.dart';
+import '../bakery_review_page.dart';
 
 class RestaurantBottomSheet extends StatefulWidget {
   const RestaurantBottomSheet({super.key});
@@ -10,6 +11,28 @@ class RestaurantBottomSheet extends StatefulWidget {
 
 class _RestaurantBottomSheetState extends State<RestaurantBottomSheet> {
   bool isLiked = false;
+  List<Map<String, dynamic>> reviews = [];
+
+  void _onAddReviewPressed() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => BakeryReviewPage(
+          onSubmit: (int rating, String reviewText) {
+            setState(() {
+              reviews.add(
+                {
+                  'username': '빵냥이대왕',
+                  'rating': rating,
+                  'reviewText': reviewText,
+                },
+              );
+            });
+          },
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +73,8 @@ class _RestaurantBottomSheetState extends State<RestaurantBottomSheet> {
                       isLiked = !isLiked;
                     });
                   },
+                  reviews: reviews,
+                  onAddReviewPressed: _onAddReviewPressed,
                 ),
               ],
             ),
