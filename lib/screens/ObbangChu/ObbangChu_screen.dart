@@ -144,14 +144,6 @@ class _ObbangChuScreenState extends State<ObbangChuScreen> {
 
             // 🥐 빵 카드
             GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => BakeryDetailPage(bakeryId,selectedBakeryId),
-                  ),
-                );
-              },
               child: Card(
                 elevation: 3,
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
