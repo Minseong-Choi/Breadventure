@@ -30,7 +30,18 @@ class Bakery {
     required this.openingHours,
     required this.comments,
   });
-
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'place_name': name,
+      'address_name': address,
+      'road_address_name': roadAddress,
+      'place_url': placeUrl,
+      'phone': phone,
+      'photo_url': photos,
+      'total_star': totalStar.toString(),
+    };
+  }
   factory Bakery.fromJson(Map<String, dynamic> json) {
     return Bakery(
       id: json['id'],
