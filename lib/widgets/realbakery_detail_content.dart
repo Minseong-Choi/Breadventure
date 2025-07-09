@@ -1,16 +1,19 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'dart:convert';
-import '../models/bakery.dart';
+import '../models/bakery.dart' as bakery_model;
+import '../models/comment.dart' as local_comment;
 import '../screens/bakery_review_page.dart';
+import '../utils/review_storage.dart';
 
 // 데이터 로드 함수
-Future<List<Bakery>> loadBakeryData() async {
+Future<List<bakery_model.Bakery>> loadBakeryData() async {
   final String jsonString =
-    await rootBundle.loadString('lib/assets/data/bakery_data_enriched.json');
+  await rootBundle.loadString('lib/assets/data/bakery_data_enriched.json');
   final Map<String, dynamic> decoded = json.decode(jsonString);
   final List<dynamic> jsonList = decoded['documents'];
-  return jsonList.map((json) => Bakery.fromJson(json)).toList();
+  return jsonList.map((json) => bakery_model.Bakery.fromJson(json)).toList();
 }
 
 // 상세 페이지
@@ -19,7 +22,7 @@ class BakeryDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<Bakery>>(
+    return FutureBuilder<List<bakery_model.Bakery>>(
       future: loadBakeryData(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -43,7 +46,7 @@ class BakeryDetailPage extends StatelessWidget {
 
 // 실제 빵집 내용 위젯
 class BakeryDetailContent extends StatelessWidget {
-  final Bakery bakery;
+  final bakery_model.Bakery bakery;
   final bool isLiked;
   final VoidCallback onLikeToggle;
 
@@ -61,9 +64,9 @@ class BakeryDetailContent extends StatelessWidget {
     final double averageRating = bakery.totalStar;
     final List<String> imagePaths = bakery.photos.take(3).toList();
     final String phone = bakery.phone;
-    final List<Comment> reviews = bakery.comments;
+    final List<bakery_model.Comment> reviews = bakery.comments;
     final String address = bakery.address;
-    final List<OpeningHour> openingHours = bakery.openingHours;
+    final List<bakery_model.OpeningHour> openingHours = bakery.openingHours;
 
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
@@ -171,11 +174,13 @@ class BakeryDetailContent extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) => BakeryReviewPage(
-                        onSubmit: (rating, reviewText) {
-                          // 리뷰 작성 후, 여기에서 부모 위젯에 전달하는 작업 수행
-                          // 예를 들어, 리뷰 리스트에 추가하는 동작
-                          print('별점: $rating, 리뷰: $reviewText');
-                          // 실제로는 이 정보를 부모 위젯에 전달하여 리스트에 추가하거나 상태를 갱신합니다.
+                        onSubmit: (rating, reviewText, selectedPhoto) async {
+                          await ReviewStorage.insertAtFront({
+                            'reviewer_name' : '빵냥이대왕',
+                            'reviewer_grade' : rating.toString(),
+                            'reviewer_photo' : selectedPhoto?.path ?? '../assets/images/cats/cat_black.jpg',
+                            'reviewer_comment' : reviewText,
+                          });
                         },
                       ),
                     ),
@@ -186,70 +191,131 @@ class BakeryDetailContent extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 12),
+
+          // ➊ 로컬 JSON 에서 가져온 사용자 리뷰 먼저 출력
+          FutureBuilder<List<local_comment.Comment>>(
+            future: ReviewStorage.loadReviews(),
+            builder: (context, snap) {
+              if (snap.connectionState == ConnectionState.waiting) {
+                return const Center(child: CircularProgressIndicator());
+              }
+              if (!snap.hasData || snap.data!.isEmpty) {
+                return const SizedBox(); // 저장된 리뷰가 없으면 빈 공간
+              }
+              final userReviews = snap.data!;
+
+              return Column(
+                children: userReviews
+                    .map((r) => _buildLocalReviewTile(r))
+                    .toList(),
+              );
+            },
+          ),
+
+          const SizedBox(height: 12),
+
+          // ➋ 그리고 기존 빵집 데이터에 포함된 리뷰 출력
           Column(
-            children: reviews.map((review) {
-              return Container(
-                margin: const EdgeInsets.only(bottom: 12),
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: Colors.grey[100],
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+            children: reviews
+                .map((r) => _buildBakeryReviewTile(r))
+                .toList(),
+          ),
+        ],
+      ),
+    );
+  }
+  // (1) bakery_model.Comment 전용
+  Widget _buildBakeryReviewTile(bakery_model.Comment r) {
+    return _commonReviewTile(
+      name: r.reviewerName,
+      grade:  r.reviewerGrade,
+      photo:  r.reviewerPhoto,
+      text:   r.reviewerComment,
+    );
+  }
+
+// (2) local_comment.Comment 전용
+  Widget _buildLocalReviewTile(local_comment.Comment r) {
+    return _commonReviewTile(
+      name: r.reviewerName,
+      grade:  r.reviewerGrade,
+      photo:  r.reviewerPhoto,
+      text:   r.reviewerComment,
+    );
+  }
+  Widget _buildPhoto(String photo) {
+    if (photo.isEmpty) {
+      return const SizedBox(width:40, height:40);
+    }
+    if (photo.startsWith('http')) {
+      // 네트워크 이미지
+      return Image.network(
+        photo,
+        width: 40, height: 40, fit: BoxFit.cover,
+        errorBuilder: (_,__,___) => const SizedBox(width:40, height:40),
+      );
+    }
+    print("로컬 사진 확인");
+    // 그 외엔 로컬 파일로 간주
+    return Image.file(
+      File(photo),
+      width: 40, height: 40, fit: BoxFit.cover,
+      errorBuilder: (_,__,___) => const SizedBox(width:40, height:40),
+    );
+  }
+
+  // 리뷰 하나를 화면에 표시하는 동일 디자인 함수
+  Widget _commonReviewTile({
+    required String name,
+    required String grade,
+    required String photo,
+    required String text,
+  }) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12),
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: Colors.grey[100],
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child: _buildPhoto(photo),
+          ),
+          const SizedBox(width:12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
                   children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(20),
-                      child: Image.network(
-                        review.reviewerPhoto,
-                        width: 40,
-                        height: 40,
-                        fit: BoxFit.cover,
-                        errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+                    Expanded(
+                      child: Text(name,
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Expanded(
-                                child:Text(
-                                review.reviewerName,
-                                style: const TextStyle(fontWeight: FontWeight.bold),
-                                  overflow:TextOverflow.ellipsis,
-                                ),
-                              ),
-                              const SizedBox(width: 8),
-                              Row(
-                                children: List.generate(
-                                  5,
-                                      (index) => Icon(
-                                    index < double.parse(review.reviewerGrade).floor()
-                                        ? Icons.star
-                                        : Icons.star_border,
-                                    color: Colors.amber,
-                                    size: 16,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 6),
-                          Text(
-                            review.reviewerComment,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ],
-                      ),
+                    const SizedBox(width:8),
+                    Row(
+                      children: List.generate(5, (i) {
+                        // 소수점 문자열도 처리할 수 있도록 double로 파싱 후 floor() 해서 정수로 변환
+                        final starCount = (double.tryParse(grade) ?? 0).floor();
+                        final filled   = i < starCount;
+                        return Icon(
+                          filled ? Icons.star : Icons.star_border,
+                          size: 16, color: Colors.amber,
+                        );
+                      }),
                     ),
                   ],
                 ),
-              );
-            }).toList(),
+                const SizedBox(height:6),
+                Text(text, maxLines:1, overflow:TextOverflow.ellipsis),
+              ],
+            ),
           ),
         ],
       ),

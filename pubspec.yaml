@@ -28,6 +28,7 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  path_provider: ^2.0.0
   http: ^0.13.6
   flutter:
     sdk: flutter
@@ -57,6 +58,7 @@ dev_dependencies:
 # The following section is specific to Flutter packages.
 flutter:
   assets:
+    - lib/utils/review_storage.dart
     - assets/kakao_map.html
     - lib/assets/images/breads/
     - lib/assets/images/cats/

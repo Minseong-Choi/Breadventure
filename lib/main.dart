@@ -4,8 +4,16 @@ import 'screens/ObbangChu/ObbangChu_screen.dart';
 import 'screens/best/best_screen.dart';
 import 'screens/map/map_screen.dart';
 import 'screens/my/my_screen.dart';
+import 'package:breadventure/utils/review_storage.dart';
 
-void main() => runApp(const BreadApp());
+
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  ReviewStorage.resetReviews();
+  runApp(const BreadApp());
+}
+
+
 
 class BreadApp extends StatelessWidget {
   const BreadApp({super.key});
