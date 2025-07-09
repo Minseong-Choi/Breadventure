@@ -1,4 +1,5 @@
 # Breadventure
+<img width="203" alt="Screenshot 2025-07-09 at 11 20 06 AM" src="https://github.com/user-attachments/assets/6625e096-fc7e-4294-80c8-e15b2ab01179" />
 
 > 🥐🐱 **빵냥이와 함께하는 빵집 탐험 앱**  
 > 반경 200m 내 빵집 알림부터 상세 리뷰, 즐겨찾기까지!  
