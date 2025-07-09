@@ -26,7 +26,7 @@ class LocationMonitor {
 
   // 2. 타이머 기반 위치 확인 시작
   static Future<void> startMonitoring() async {
-    const distanceThreshold = 250; // 50m
+    const distanceThreshold = 100; // 100m
     const checkInterval = Duration(seconds: 10);
 
     print('📡 타이머 기반 위치 모니터링 시작');
