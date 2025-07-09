@@ -76,7 +76,7 @@ class _MyScreenState extends State<MyScreen> {
                             style: TextStyle(fontSize: 18)),
                         const SizedBox(width: 8),
                         Tooltip(
-                          message: '반경 200m 내에 빵이 있으면 알림을 보내준다냥🐱!',
+                          message: '반경 100m 내에 빵이 있으면 알림을 보내준다냥🐱!',
                           child: Icon(Icons.info_outline,
                               size: 18, color: Colors.grey[600]),
                         ),
