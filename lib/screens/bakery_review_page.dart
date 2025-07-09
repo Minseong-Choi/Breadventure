@@ -2,8 +2,12 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
+/// 리뷰 작성 화면 (일회성, 목업용)
 class BakeryReviewPage extends StatefulWidget {
-  const BakeryReviewPage({super.key});
+  /// 별점(rating)과 후기(reviewText)를 부모로 전달
+  final void Function(int rating, String reviewText, File? selectedPhoto) onSubmit;
+
+  const BakeryReviewPage({super.key, required this.onSubmit});
 
   @override
   State<BakeryReviewPage> createState() => _BakeryReviewPageState();
@@ -11,7 +15,7 @@ class BakeryReviewPage extends StatefulWidget {
 
 class _BakeryReviewPageState extends State<BakeryReviewPage> {
   File? _selectedImage;
-  int _rating = 0; // 현재 선택한 별점
+  int _rating = 0;
   final TextEditingController _reviewController = TextEditingController();
 
   Future<void> _pickImage() async {
@@ -29,69 +33,70 @@ class _BakeryReviewPageState extends State<BakeryReviewPage> {
     return Scaffold(
         backgroundColor: Colors.white,
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              // 별점
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: List.generate(5, (index) {
-                  return IconButton(
-                    icon: Icon(
-                      Icons.star,
-                      color: index < _rating ? Colors.amber : Colors.grey,
-                      size: 36,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        _rating = index + 1; // 인덱스는 0부터 시작하니 +1
-                      });
-                    },
-                  );
-                }),
-              ),
-              const SizedBox(height: 24),
-              // 이미지 선택 버튼
-              Row(
-                children: [
-                  ElevatedButton.icon(
-                    onPressed: _pickImage,
-                    icon: const Icon(Icons.photo),
-                    label: const Text('사진 추가'),
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            // 별점 선택
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(5, (index) {
+                return IconButton(
+                  icon: Icon(
+                    Icons.star,
+                    color: index < _rating ? Colors.amber : Colors.grey,
+                    size: 36,
                   ),
-                  const SizedBox(width: 16),
-                  // 선택한 이미지 미리보기
-                  if (_selectedImage != null)
-                    SizedBox(
-                      height: 80,
-                      width: 80,
-                      child: Image.file(_selectedImage!, fit: BoxFit.cover),
-                    ),
-                ],
-              ),
-              const SizedBox(height: 16),
-              // 후기 입력
-              TextField(
-                controller: _reviewController,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: '후기를 작성해주세요...',
-                ),
-                maxLines: 5,
-              ),
-              const SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: () {
-                  // 리뷰 등록 로직 작성
-                },
-                child: const Text('리뷰 등록'),
-              ),
-            ],
-          ),
-        ),
-      )
+                  onPressed: () => setState(() {
+                    _rating = index + 1;
+                  }),
+                );
+              }),
+            ),
+            const SizedBox(height: 24),
 
+            // 이미지 선택 (선택 사항)
+            Row(
+              children: [
+                ElevatedButton.icon(
+                  onPressed: _pickImage,
+                  icon: const Icon(Icons.photo),
+                  label: const Text('사진 추가'),
+                ),
+                const SizedBox(width: 16),
+                if (_selectedImage != null)
+                  SizedBox(
+                    height: 80,
+                    width: 80,
+                    child: Image.file(_selectedImage!, fit: BoxFit.cover),
+                  ),
+              ],
+            ),
+            const SizedBox(height: 16),
+
+            // 후기 입력
+            TextField(
+              controller: _reviewController,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: '후기를 입력해주세요...',
+              ),
+              maxLines: 5,
+            ),
+            const SizedBox(height: 24),
+
+            // 등록 버튼
+            ElevatedButton(
+              onPressed: () {
+                // 부모 콜백 전달
+                widget.onSubmit(_rating, _reviewController.text, _selectedImage);
+                Navigator.pop(context);
+              },
+              child: const Text('리뷰 등록'),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

@@ -17,7 +17,13 @@ class UserData {
     required this.reviews,
     required this.favorites,
   });
-
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'username': username,
+    'profileImage': profileImage,
+    'reviews': reviews.map((r) => r.toJson()).toList(),
+    'favorites': favorites.map((a) => a.toJson()).toList(),
+  };
   factory UserData.fromJson(Map<String, dynamic> json) => UserData(
     id: json['id'],
     username: json['username'],
@@ -30,11 +36,5 @@ class UserData {
         .toList(),
   );
 
-  Map<String, dynamic> toJson() => {
-    'id': id,
-    'username': username,
-    'profileImage': profileImage,
-    'reviews': reviews.map((r) => r.toJson()).toList(),
-    'favorites': favorites.map((b) => b.toJson()).toList(),
-  };
+
 }
