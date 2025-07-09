@@ -3,8 +3,6 @@ import 'package:webview_flutter/webview_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:geolocator/geolocator.dart';
 
-import '../../service/notification_service.dart';
-import '../../service/location_tracker.dart';
 
 Future<void> _requestLocationPermission() async {
   final status = await Permission.location.request();
@@ -28,8 +26,6 @@ class _KakaoMapWidgetState extends State<KakaoMapWidget> {
   void initState() {
     super.initState();
     _initializeWebView();
-    initNotifications(); // 푸시 초기화
-    startLocationTracking(); // 위치 추적 시작
   }
 
   Future<void> _initializeWebView() async {
