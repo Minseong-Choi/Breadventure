@@ -5,7 +5,7 @@ import 'package:image_picker/image_picker.dart';
 /// 리뷰 작성 화면 (일회성, 목업용)
 class BakeryReviewPage extends StatefulWidget {
   /// 별점(rating)과 후기(reviewText)를 부모로 전달
-  final void Function(int rating, String reviewText) onSubmit;
+  final void Function(int rating, String reviewText, File? selectedPhoto) onSubmit;
 
   const BakeryReviewPage({super.key, required this.onSubmit});
 
@@ -89,7 +89,7 @@ class _BakeryReviewPageState extends State<BakeryReviewPage> {
             ElevatedButton(
               onPressed: () {
                 // 부모 콜백 전달
-                widget.onSubmit(_rating, _reviewController.text);
+                widget.onSubmit(_rating, _reviewController.text, _selectedImage);
                 Navigator.pop(context);
               },
               child: const Text('리뷰 등록'),

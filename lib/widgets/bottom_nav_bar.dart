@@ -165,7 +165,7 @@ class BottomNavBar extends StatelessWidget {
   final int current;
   final ValueChanged<int> onTap;
 
-  const BottomNavBar({super.key, required this.current, required this.onTap});
+  const  BottomNavBar({super.key, required this.current, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -184,7 +184,7 @@ class BottomNavBar extends StatelessWidget {
         children: [
           for (int i = 0; i < navBtn.length; i++)
             GestureDetector(
-              onTap: () => onTap(i),
+              onTap: () => onTap( i),
               child: SizedBox(
                 width: 75.0,
                 child: Stack(

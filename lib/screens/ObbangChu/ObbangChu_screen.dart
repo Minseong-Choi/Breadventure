@@ -45,14 +45,14 @@ class _ObbangChuScreenState extends State<ObbangChuScreen> {
     final Map<String, List<String>> breadsByWeather = {
       'Clear': ['크림빵', '소보루빵', '버터프레첼'],
       'Rain': ['단팥빵', '모카번', '찹쌀도넛'],
-      'Clouds': ['치즈바게트', '식빵', '브리오슈'],
+      'Clouds': ['마카롱', '식빵', '스콘'],
       'Default': ['크림빵'], // 기본 빵
     };
 
     final Map<String, List<String>> catMessagesByWeather = {
       'Clear': ['햇빛 쨍쨍한 날엔 역시 {bread}이지!', '맑은 날엔 달콤한 {bread} 어때?'],
-      'Rain': ['비 오는 날엔 따뜻한 {bread}가 최고야!', '촉촉한 날엔 {bread} 한 입!'],
-      'Clouds': ['흐린 날에는 부드러운 {bread}가 딱이지!', '포근한 날엔 {bread} 먹자!'],
+      'Rain': ['비 오는 날엔 따뜻한 {bread}이 최고야!', '촉촉한 날엔 {bread} 한 입!'],
+      'Clouds': ['흐린 날에는 부드러운 {bread}이 딱이지!', '포근한 날엔 {bread} 먹자!'],
       'Default': ['{bread}가 최고야!'], // 기본 메시지
     };
 

@@ -14,24 +14,7 @@ class _RestaurantBottomSheetState extends State<RestaurantBottomSheet> {
   List<Map<String, dynamic>> reviews = [];
 
   void _onAddReviewPressed() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => BakeryReviewPage(
-          onSubmit: (int rating, String reviewText) {
-            setState(() {
-              reviews.add(
-                {
-                  'username': '빵냥이대왕',
-                  'rating': rating,
-                  'reviewText': reviewText,
-                },
-              );
-            });
-          },
-        ),
-      ),
-    );
+
   }
 
   @override

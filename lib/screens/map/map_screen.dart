@@ -21,14 +21,16 @@ class MapScreen extends StatelessWidget {
         children: [
           // Map 위젯
           Expanded(
-            child: KakaoMapWidget(),
+            child: KakaoMapWidget(key: UniqueKey()),
           ),
           // 버튼
           Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: ElevatedButton(
-              onPressed: () => _showRestaurantSheet(context),
-              child: const Text('🍞 빵집 리스트 보기'),
+            padding: const EdgeInsets.all(1.0),
+            child: Text(
+                '',
+              style: const TextStyle(
+                fontSize: 1,
+              ),
             ),
           ),
         ],

@@ -27,6 +27,17 @@ class _BakeryDetailPageState extends State<BakeryDetailPage> {
     return bakeries.firstWhere((b) => b.id == widget.bakeryId);
   }
 
+  void toggleLike() {
+    setState(() {
+      if (isLiked) {
+        FavoriteManager.favoriteBakeryIds.remove(widget.bakeryId);
+      } else {
+        FavoriteManager.favoriteBakeryIds.add(widget.bakeryId);
+      }
+      isLiked = !isLiked;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<Bakery?>(
@@ -45,11 +56,7 @@ class _BakeryDetailPageState extends State<BakeryDetailPage> {
           body: BakeryDetailContent(
             bakery: bakery,
             isLiked: isLiked,
-            onLikeToggle: () {
-              setState(() {
-                isLiked = !isLiked;
-              });
-            },
+            onLikeToggle: toggleLike,
           ),
         );
       },
