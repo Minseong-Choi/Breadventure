@@ -1,8 +1,6 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'dart:convert';
-
 import '../models/bakery.dart';
 
 /// 전역 즐겨찾기 저장 클래스
@@ -12,18 +10,16 @@ class FavoriteManager {
 
 /// JSON 파일에서 빵집 전체 데이터 불러오기
 Future<List<Bakery>> loadBakeryData() async {
-
   final String jsonString =
   await rootBundle.loadString('lib/assets/data/bakery_data_enriched.json');
   final Map<String, dynamic> decoded = json.decode(jsonString);
   final List<dynamic> jsonList = decoded['documents'];
-  return jsonList.map((json) => bakery_model.Bakery.fromJson(json)).toList();
+  return jsonList.map((json) => Bakery.fromJson(json)).toList();
 }
-
 
 /// 상세페이지 내용 구성 위젯
 class BakeryDetailContent extends StatelessWidget {
-  final bakery_model.Bakery bakery;
+  final Bakery bakery;
   final bool isLiked;
   final VoidCallback onLikeToggle;
 
@@ -34,16 +30,14 @@ class BakeryDetailContent extends StatelessWidget {
     required this.onLikeToggle,
   });
 
-
   @override
   Widget build(BuildContext context) {
     final String bakeryName = bakery.name;
     final double averageRating = bakery.totalStar;
     final List<String> imagePaths = bakery.photos.take(3).toList();
     final String phone = bakery.phone;
-    final List<bakery_model.Comment> reviews = bakery.comments;
+    final List<Comment> reviews = bakery.comments;
     final String address = bakery.address;
-
 
     return Scaffold(
       appBar: AppBar(
