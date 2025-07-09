@@ -28,7 +28,7 @@ class BestScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('죽여주는 빵집 (후기순)'),
+        title: Text('Ranking (후기순)'),
         backgroundColor:Color(0xFFFCEAD9),
         centerTitle: true, // 제목 가운데 정렬
       ),
