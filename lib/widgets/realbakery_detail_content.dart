@@ -7,6 +7,10 @@ import '../models/comment.dart' as local_comment;
 import '../screens/bakery_review_page.dart';
 import '../utils/review_storage.dart';
 
+/// 전역 즐겨찾기 저장 클래스
+class FavoriteManager {
+  static List<String> favoriteBakeryIds = [];
+}
 
 // 데이터 로드 함수
 Future<List<bakery_model.Bakery>> loadBakeryData() async {
@@ -58,7 +62,6 @@ class BakeryDetailContent extends StatelessWidget {
     required this.onLikeToggle,
   });
 
-
   @override
   Widget build(BuildContext context) {
     final String bakeryName = bakery.name;
@@ -68,9 +71,14 @@ class BakeryDetailContent extends StatelessWidget {
     final List<bakery_model.Comment> reviews = bakery.comments;
     final String address = bakery.address;
     final List<bakery_model.OpeningHour> openingHours = bakery.openingHours;
-    const double indent = 16.0;
 
-    return SingleChildScrollView(
+    return Scaffold(
+        appBar: AppBar(
+        title: const Text('빵집 상세페이지'),
+    backgroundColor: Color(0xFFFCEAD9),
+    centerTitle: true,
+    ),
+    body: SingleChildScrollView(
       padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -89,8 +97,11 @@ class BakeryDetailContent extends StatelessWidget {
                   isLiked ? Icons.favorite : Icons.favorite_border,
                   color: isLiked ? Colors.red : Colors.grey,
                 ),
-                onPressed: onLikeToggle,
-              ),
+                onPressed: (){
+    print("🦛즐겨찾기한 식당 아이디 ${FavoriteManager.favoriteBakeryIds}");
+    onLikeToggle();
+    },
+    ),
             ],
           ),
           const SizedBox(height: 4),
@@ -125,13 +136,11 @@ class BakeryDetailContent extends StatelessWidget {
               data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
               child: ExpansionTile(
                 dense: true,
-                // 모든 기본 수평 패딩 제거
                 tilePadding: EdgeInsets.zero,
                 childrenPadding: EdgeInsets.zero,
-
                 leading: const Icon(
                   Icons.access_time_outlined,
-                  size: 14,
+                  size: 16,
                   color: Colors.orangeAccent,
                 ),
                 title: Text(
@@ -145,13 +154,12 @@ class BakeryDetailContent extends StatelessWidget {
                 ),
                 trailing: const Icon(
                   Icons.keyboard_arrow_down,
-                  size: 14,
+                  size: 16,
                   color: Colors.black54,
                 ),
-
                 children: bakery.openingHours.map((h) {
                   return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 0),
+                    padding: const EdgeInsets.symmetric(vertical: 2),
                     child: Row(
                       children: [
                         Text(
@@ -302,7 +310,6 @@ class BakeryDetailContent extends StatelessWidget {
           ),
 
           const SizedBox(height: 20),
-// --- 메뉴 부분 교체 끝 ---
 
           // 리뷰
           Row(
@@ -366,6 +373,7 @@ class BakeryDetailContent extends StatelessWidget {
           ),
         ],
       ),
+    ),
     );
   }
   // (1) bakery_model.Comment 전용
