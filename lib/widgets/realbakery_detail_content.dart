@@ -68,7 +68,7 @@ class BakeryDetailContent extends StatelessWidget {
     final List<bakery_model.Comment> reviews = bakery.comments;
     final String address = bakery.address;
     final List<bakery_model.OpeningHour> openingHours = bakery.openingHours;
-
+    const double indent = 16.0;
 
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
@@ -125,11 +125,13 @@ class BakeryDetailContent extends StatelessWidget {
               data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
               child: ExpansionTile(
                 dense: true,
-                tilePadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                childrenPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                // 모든 기본 수평 패딩 제거
+                tilePadding: EdgeInsets.zero,
+                childrenPadding: EdgeInsets.zero,
+
                 leading: const Icon(
                   Icons.access_time_outlined,
-                  size: 16,
+                  size: 14,
                   color: Colors.orangeAccent,
                 ),
                 title: Text(
@@ -143,12 +145,13 @@ class BakeryDetailContent extends StatelessWidget {
                 ),
                 trailing: const Icon(
                   Icons.keyboard_arrow_down,
-                  size: 16,
+                  size: 14,
                   color: Colors.black54,
                 ),
+
                 children: bakery.openingHours.map((h) {
                   return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 2),
+                    padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 0),
                     child: Row(
                       children: [
                         Text(
@@ -238,8 +241,8 @@ class BakeryDetailContent extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8),
                 child: Image.network(
                   url,
-                  width: 100,
-                  height: 100,
+                  width: 120,
+                  height: 120,
                   fit: BoxFit.cover,
                 ),
               );
@@ -247,16 +250,59 @@ class BakeryDetailContent extends StatelessWidget {
           ),
 
           const SizedBox(height: 20),
-
-          // 메뉴
-          const Text(
-            '메뉴',
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+// --- 메뉴 부분 교체 시작 ---
+          Padding(
+            padding: const EdgeInsets.only(left: 16, bottom: 12),
+            child: Text(
+              '메뉴',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: Colors.brown.shade800,
+              ),
+            ),
           ),
-          const SizedBox(height: 8),
-          ...bakery.menu.map((item) => Text('• ${item.name}')),
+
+// 한눈에 다 보이는 Wrap 그리드
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Wrap(
+              spacing: 8,    // 옆 아이템 간격
+              runSpacing: 8, // 다음 줄과의 간격
+              children: bakery.menu.map((item) {
+                return Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [Colors.orange.shade100, Colors.orange.shade200],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black12,
+                        blurRadius: 4,
+                        offset: const Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                  child: Text(
+                    item.name,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.brown,
+                      letterSpacing: 0.2,
+                    ),
+                  ),
+                );
+              }).toList(),
+            ),
+          ),
 
           const SizedBox(height: 20),
+// --- 메뉴 부분 교체 끝 ---
 
           // 리뷰
           Row(
