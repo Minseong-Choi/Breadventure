@@ -32,28 +32,28 @@ class ObbangChuScreen extends StatefulWidget {
 }
 
 class _ObbangChuScreenState extends State<ObbangChuScreen> {
-  String? weather;
-  String? breadName;
-  String? catText;
-  final String bakeryName = "고양이 베이커리";
+  String weather = "맑은";
+  String breadName = "빵 고르는 중";
+  String catText = "오늘의 빵 추천은~~??";
+  String bakeryName = "고양이 베이커리";
   final String breadImageUrl = "lib/assets/images/breads/CreamBread.jpg";
 
   // 날씨에 따라 추천 빵과 말풍선 텍스트 뽑기
-  Map<String, dynamic> getBreadRecommendation(String weatherMain) {
+  Map<String, dynamic>  getBreadRecommendation(String weatherMain) {
     final weather = simplifyWeather(weatherMain);
 
     final Map<String, List<String>> breadsByWeather = {
-      'Clear': ['크림빵', '소보루빵', '버터프레첼'],
-      'Rain': ['단팥빵', '모카번', '찹쌀도넛'],
-      'Clouds': ['마카롱', '식빵', '스콘'],
+      '맑은': ['크림빵', '소보루빵', '버터프레첼'],
+      '비 오는': ['단팥빵', '모카번', '찹쌀도넛'],
+      '흐린': ['마카롱', '식빵', '스콘'],
       'Default': ['크림빵'], // 기본 빵
     };
 
     final Map<String, List<String>> catMessagesByWeather = {
-      'Clear': ['햇빛 쨍쨍한 날엔 역시 {bread}이지!', '맑은 날엔 달콤한 {bread} 어때?'],
-      'Rain': ['비 오는 날엔 따뜻한 {bread}이 최고야!', '촉촉한 날엔 {bread} 한 입!'],
-      'Clouds': ['흐린 날에는 부드러운 {bread}이 딱이지!', '포근한 날엔 {bread} 먹자!'],
-      'Default': ['{bread}가 최고야!'], // 기본 메시지
+      '맑은': ['햇빛 쨍쨍한 날엔 역시 {bread}이지!', '맑은 날엔 달콤한 {bread} 어때?'],
+      '비 오는': ['비 오는 날엔 따뜻한 {bread}이 최고야!', '촉촉한 날엔 {bread} 한 입!'],
+      '흐린': ['흐린 날에는 부드러운 {bread}이 딱이지!', '포근한 날엔 {bread} 먹자!'],
+      'Default': ['{bread}이 최고야!!'], // 기본 메시지
     };
 
     final breads = breadsByWeather[weather] ?? breadsByWeather['Default']!;
@@ -62,7 +62,7 @@ class _ObbangChuScreenState extends State<ObbangChuScreen> {
     final messages = catMessagesByWeather[weather] ?? catMessagesByWeather['Default']!;
     final messageTemplate = messages[Random().nextInt(messages.length)];
     final message = messageTemplate.replaceAll('{bread}', bread);
-
+    print("ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ");
     return {
       'bread': bread,
       'text': message,
@@ -73,6 +73,7 @@ class _ObbangChuScreenState extends State<ObbangChuScreen> {
   void initState() {
     super.initState();
     fetchAndSetWeather();
+
   }
 
   Future<void> fetchAndSetWeather() async {
@@ -80,6 +81,7 @@ class _ObbangChuScreenState extends State<ObbangChuScreen> {
       final fetchedWeather = await fetchWeather("Daejeon");
       final recommendation = getBreadRecommendation(fetchedWeather);
       setState(() {
+        print("ㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎ");
         weather = simplifyWeather(fetchedWeather);
         breadName = recommendation['bread'];
         catText = recommendation['text'];
@@ -92,7 +94,17 @@ class _ObbangChuScreenState extends State<ObbangChuScreen> {
       });
     }
   }
-
+  final Map<String, String> _bakeryMap = {
+    "9114033" : "빵굽는 마을",
+    "740243959" : "꾸드뱅베이커스하우스",
+    "535720711" : "미미제과점",
+    "1087674452" : "백조베이커리",
+    "1055792304" : "파리바게뜨 대전용두선화점",
+    "24710167" : "크리베리",
+    "1181056420" : "사오 대전직영점"
+  };
+  late List<String> _bakeryIds = _bakeryMap.keys.toList();
+  final Random _rng = Random();
   @override
   Widget build(BuildContext context) {
     if (weather == null) {
@@ -144,6 +156,15 @@ class _ObbangChuScreenState extends State<ObbangChuScreen> {
 
             // 🥐 빵 카드
             GestureDetector(
+              onTap: () {
+                var randomId = _bakeryIds[_rng.nextInt(_bakeryIds.length)];
+                breadName = _bakeryMap[randomId]!;
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => BakeryDetailPage(bakeryId: randomId),
+                  ),
+                );
+              },
               child: Card(
                 elevation: 3,
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
