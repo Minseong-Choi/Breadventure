@@ -3,10 +3,15 @@ import 'package:webview_flutter/webview_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:geolocator/geolocator.dart';
 
+import '../../service/location_monitor.dart';
 
 Future<void> _requestLocationPermission() async {
-  final status = await Permission.location.request();
-  if (!status.isGranted) {
+  LocationPermission permission = await Geolocator.checkPermission();
+  if (permission == LocationPermission.denied || permission == LocationPermission.deniedForever) {
+    permission = await Geolocator.requestPermission();
+  }
+
+  if (permission == LocationPermission.denied || permission == LocationPermission.deniedForever) {
     print('❌ 위치 권한이 거부되었습니다.');
   }
 }
@@ -26,6 +31,13 @@ class _KakaoMapWidgetState extends State<KakaoMapWidget> {
   void initState() {
     super.initState();
     _initializeWebView();
+    LocationMonitor.startMonitoring(); // 앱 실행 중 실시간 위치 모니터링
+  }
+
+  @override
+  void dispose() {
+    LocationMonitor.stopMonitoring(); // 앱 종료 시 모니터링 중지
+    super.dispose();
   }
 
   Future<void> _initializeWebView() async {
