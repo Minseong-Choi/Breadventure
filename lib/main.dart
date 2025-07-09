@@ -52,14 +52,23 @@ class _RootTabViewState extends State<_RootTabView> {
 
   @override
   Widget build(BuildContext context) {
-    Widget body = (_current == 2)
-      ? MapScreen(key: UniqueKey()) : _pages[_current];
+    Widget body ;
+    if (_current == 2){
+      body=MapScreen(key: UniqueKey());
+    } else if (_current==3){
+      body = MyScreen(key:UniqueKey());
+    } else {
+      body= _pages[_current];
+    }
+
 
     return Scaffold(
-      body: _current == 2 ? body : IndexedStack(index: _current, children: _pages),
+      body:(_current==2||_current==3)
+          ? body
+          : IndexedStack(index: _current,children:_pages),
       bottomNavigationBar: BottomNavBar(
-        current: _current,
-        onTap: (i) => setState(() => _current = i),
+        current:_current,
+        onTap: (i) => setState(()=> _current=i),
       ),
     );
   }
