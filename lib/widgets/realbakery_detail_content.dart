@@ -7,6 +7,7 @@ import '../models/comment.dart' as local_comment;
 import '../screens/bakery_review_page.dart';
 import '../utils/review_storage.dart';
 
+
 // 데이터 로드 함수
 Future<List<bakery_model.Bakery>> loadBakeryData() async {
   final String jsonString =
@@ -68,11 +69,13 @@ class BakeryDetailContent extends StatelessWidget {
     final String address = bakery.address;
     final List<bakery_model.OpeningHour> openingHours = bakery.openingHours;
 
+
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          const SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -111,20 +114,115 @@ class BakeryDetailContent extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 12),
-          Text(
-            '⏰ 운영시간:',
+          Builder(builder: (context) {
+            // 수요일 코드: '수' 로 매칭
+            const todayDay = '수(7/9)';
+            // 수요일 시간이 없는 경우 대비
+            final todayHour = bakery.openingHours
+                .firstWhere((h) => h.day == todayDay, orElse: () => bakery_model.OpeningHour(day: todayDay, time: '정보 없음'))
+                .time;
+            return Theme(
+              data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+              child: ExpansionTile(
+                dense: true,
+                tilePadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                childrenPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                leading: const Icon(
+                  Icons.access_time_outlined,
+                  size: 16,
+                  color: Colors.orangeAccent,
+                ),
+                title: Text(
+                  '오늘 (수요일): $todayHour',
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    letterSpacing: 0.2,
+                    color: Colors.black87,
+                  ),
+                ),
+                trailing: const Icon(
+                  Icons.keyboard_arrow_down,
+                  size: 16,
+                  color: Colors.black54,
+                ),
+                children: bakery.openingHours.map((h) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 2),
+                    child: Row(
+                      children: [
+                        Text(
+                          '${h.day}요일:',
+                          style: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            letterSpacing: 0.2,
+                            color: Colors.black87,
+                          ),
+                        ),
+                        const SizedBox(width: 6),
+                        Text(
+                          h.time,
+                          style: const TextStyle(
+                            fontSize: 14,
+                            color: Colors.black54,
+                            letterSpacing: 0.2,
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                }).toList(),
+              ),
+            );
+          }),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 4),
+            child: Row(
+              children: [
+                const Icon(
+                  Icons.location_on_outlined,
+                  size: 16,
+                  color: Colors.redAccent,
+                ),
+                const SizedBox(width: 6),
+                Expanded(
+                  child: Text(
+                    address,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black87,
+                      letterSpacing: 0.2,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
-          const SizedBox(height: 8),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: bakery.openingHours.map((hour){
-              return Text('${hour.day}-${hour.time}');
-            }).toList(),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 4),
+            child: Row(
+              children: [
+                const Icon(
+                  Icons.phone_outlined,
+                  size: 16,
+                  color: Colors.blueAccent,
+                ),
+                const SizedBox(width: 6),
+                Text(
+                  phone,
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black87,
+                    letterSpacing: 0.2,
+                  ),
+                ),
+              ],
+            ),
           ),
-          Text('📍 $address'),
-          const SizedBox(height: 8),
-          Text('📞 $phone'),
+
           const SizedBox(height: 20),
 
           // 사진첩

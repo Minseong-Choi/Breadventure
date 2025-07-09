@@ -53,7 +53,7 @@ class _RootTabViewState extends State<_RootTabView> {
   @override
   Widget build(BuildContext context) {
     Widget body = (_current == 2)
-      ? MapScreen(key: UniqueKey()) : _pages[_current];;
+      ? MapScreen(key: UniqueKey()) : _pages[_current];
 
     return Scaffold(
       body: _current == 2 ? body : IndexedStack(index: _current, children: _pages),
