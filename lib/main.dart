@@ -35,7 +35,7 @@ class _RootTabView extends StatefulWidget {
 class _RootTabViewState extends State<_RootTabView> {
   int _current = 0;
 
-  final _pages = const [
+  final _pages = [
     ObbangChuScreen(),
     BestScreen(),
     MapScreen(),
@@ -44,8 +44,11 @@ class _RootTabViewState extends State<_RootTabView> {
 
   @override
   Widget build(BuildContext context) {
+    Widget body = (_current == 2)
+      ? MapScreen(key: UniqueKey()) : _pages[_current];;
+
     return Scaffold(
-      body: IndexedStack(index: _current, children: _pages),
+      body: _current == 2 ? body : IndexedStack(index: _current, children: _pages),
       bottomNavigationBar: BottomNavBar(
         current: _current,
         onTap: (i) => setState(() => _current = i),
